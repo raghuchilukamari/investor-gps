@@ -47,6 +47,9 @@ cd investor-gps
 ```bash
 cd frontend
 npm install
+# Create .env file
+cp .env.example .env  # If .env.example exists
+# Start the development server
 npm run dev
 ```
 
@@ -56,6 +59,9 @@ cd backend
 python -m venv venv
 source venv/bin/activate  # On Windows: .\venv\Scripts\activate
 pip install -r requirements.txt
+# Create .env file
+cp .env.example .env  # If .env.example exists
+# Start the development server
 uvicorn main:app --reload
 ```
 
@@ -87,6 +93,26 @@ TWITTER_API_SECRET=your_twitter_api_secret
 FRED_API_KEY=your_fred_api_key
 ```
 
+### Troubleshooting
+
+1. Port Conflicts:
+   - If port 3000 is in use for frontend: `npm run dev -- -p 3001`
+   - If port 8000 is in use for backend: `uvicorn main:app --reload --port 8001`
+
+2. Database Connection Issues:
+   - Ensure PostgreSQL is running: `sudo service postgresql status`
+   - Check database credentials in .env file
+   - Verify database exists: `psql -l | grep investor_gps`
+
+3. Frontend Build Issues:
+   - Clear Next.js cache: `rm -rf frontend/.next`
+   - Reinstall dependencies: `cd frontend && rm -rf node_modules && npm install`
+
+4. Backend Issues:
+   - Activate virtual environment: `source backend/venv/bin/activate`
+   - Update dependencies: `pip install -r requirements.txt`
+   - Check logs: `tail -f backend/logs/app.log`
+
 ## 📁 Project Structure
 
 ```
@@ -98,16 +124,17 @@ investor-gps/
 │   │   ├── hooks/          # Custom React hooks
 │   │   ├── store/          # Zustand store
 │   │   └── types/          # TypeScript types
-│   └── public/             # Static assets
+│   ├── public/             # Static assets
+│   └── package.json        # Frontend dependencies
 ├── backend/                 # FastAPI backend
 │   ├── app/
-│   │   ├── api/           # API routes
+│   │   ├── api/           # API endpoints
 │   │   ├── core/          # Core functionality
 │   │   ├── models/        # Database models
-│   │   ├── schemas/       # Pydantic schemas
 │   │   └── services/      # Business logic
-│   └── tests/             # Backend tests
-└── docker/                # Docker configuration
+│   ├── alembic/           # Database migrations
+│   └── requirements.txt    # Backend dependencies
+└── README.md              # Project documentation
 ```
 
 ## 📈 Roadmap
@@ -122,7 +149,11 @@ investor-gps/
 
 ## 🤝 Contributing
 
-Contributions are welcome! Please read our contributing guidelines before submitting pull requests.
+1. Create a new branch: `git checkout -b feature/your-feature-name`
+2. Make your changes
+3. Commit your changes: `git commit -m 'Add some feature'`
+4. Push to the branch: `git push origin feature/your-feature-name`
+5. Submit a pull request
 
 ## 📝 License
 
