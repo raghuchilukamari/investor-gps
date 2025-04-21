@@ -37,8 +37,9 @@ async def health_check():
     )
 
 # Import and include routers
-# from app.api import macrometer, sentiment, market_reaction, earnings
-# app.include_router(macrometer.router, prefix="/api/v1/macrometer", tags=["macrometer"])
-# app.include_router(sentiment.router, prefix="/api/v1/sentiment", tags=["sentiment"])
+from .routers import macro, sentiment
+
+app.include_router(macro.router, prefix="/api/v1/macro", tags=["macro"])
+app.include_router(sentiment.router, prefix="/api/v1/sentiment", tags=["sentiment"])
 # app.include_router(market_reaction.router, prefix="/api/v1/market-reaction", tags=["market-reaction"])
 # app.include_router(earnings.router, prefix="/api/v1/earnings", tags=["earnings"]) 
